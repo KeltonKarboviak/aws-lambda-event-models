@@ -40,6 +40,6 @@ setup(
     name='aws-lambda-event-models',
     packages=find_packages(include=['aws_lambda_event_models', 'aws_lambda_event_models.*']),
     url='https://github.com/KeltonKarboviak/aws-lambda-event-models',
-    version='0.0.0',
+    version='0.0.1',
     zip_safe=False,
 )
