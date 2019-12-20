@@ -1,0 +1,20 @@
+language: python
+python:
+- 3.8
+- 3.7
+- 3.6
+- 3.5
+
+install: pip install -U tox-travis
+script: tox
+
+deploy:
+  provider: pypi
+  distributions: sdist bdist_wheel
+  user: __token__
+  password:
+    secure: rbddjYqx1D15r0AEQA3Qi5X91Dd80ceA3yzzEAgp7DaLMIBbuOpq/9FObCY4H5zMogB9SbM1692UxWv0zWkibmWku6oCCr5vSY6DmU+PSt78kDAet2n/5yr8giPgBGOGzoNCjTnnLnMQSEIuO4UjKc4uuVmU2/x4qpcYrKwtqc4Olc0owbi/rYeC91yht/Dq5XnRHLjASyAWgrg31T3X5/nUTZvnBF3kZVEi18bZIa5vdc55g/hCCnwag6BWhX3s3uE1BEkBd+fWIprXG5VsP946nAzxt2bPC2rmCsp/ilfWDhva6HUy64WvacQZIQIED7qY8oOOINIE+bg6YNV2hgzVmqBPaQpeyaBP/GgXMdvPcGlb/FE8w6qZpLLghiqvpJs5KDPM7GAZxLmaA3tR438xrJtr37KUhoSxm4q962q2+Bq21jsDCd3YyrGrli+uFbBeDWScP3dagYSzJWU/A8d7U8Ig3FXz/d5h+YxnwJZZVtyX4GcviOyeM+G2SA8J2CPD/7IxdTKrsXnXjjTLniyU422Wrtnm8h52z8f382sF8DJrW08FPwIGR0gRQNgmXDs2Z/velcT2cQaBOt4wAeA5w8B6eQsStYCj0YOegtKEtj9HIKQVKjnZ39OyNeKjlF98a+gqUr/HXWb0I+0kRSvtqG6PagOJeesq/3UURlY=
+  on:
+    tags: true
+    repo: KeltonKarboviak/aws-lambda-event-models
+    python: 3.8
