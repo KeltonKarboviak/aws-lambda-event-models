@@ -53,6 +53,9 @@ lint: ## check style with flake8
 test: ## run tests quickly with the default Python
 	pytest -vvv tests/
 
+test-watch: ## run tests watching for changes
+	pytest -vvv -f --color=yes tests/
+
 test-all: ## run tests on every Python version with tox
 	tox
 
