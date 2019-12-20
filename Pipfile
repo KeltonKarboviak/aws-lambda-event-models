@@ -1,0 +1,20 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[packages]
+aws-lambda-event-models = {editable = true,path = "."}
+
+[dev-packages]
+black = "==19.10b0"
+bump2version = "*"
+coverage = "*"
+flake8 = "*"
+pytest = "*"
+sphinx = "*"
+tox = "*"
+twine = "*"
+
+[requires]
+python_version = "3.7"
