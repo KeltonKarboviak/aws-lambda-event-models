@@ -28,10 +28,7 @@ class S3Object(BaseModel):
     sequencer: str
 
     class Config:
-        fields = {
-            "etag": "eTag",
-            "version_id": "versionId",
-        }
+        fields = {"etag": "eTag", "version_id": "versionId"}
 
 
 class S3(BaseModel):
