@@ -1,5 +1,3 @@
-#!/usr/bin/env python
-
 """Tests for `aws-lambda-event-models` package."""
 
 import aws_lambda_event_models
