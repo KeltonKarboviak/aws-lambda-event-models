@@ -12,7 +12,7 @@ class DummyBase64StrModel(BaseModel):
 
 @pytest.fixture()
 def fake_data():
-    return 'Hello this is a test.'
+    return 'Hello, this is a test.'
 
 
 @pytest.fixture()
