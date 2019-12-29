@@ -75,21 +75,36 @@ def test_correctly_parse_valid_kinesis_event_record(kinesis_event_record):
 
     # top-level fields
     assert "1.0" == record.event_version
-    assert "aws:kinesis" == record.event_source and EventSource.kinesis == record.event_source
+    assert (
+        "aws:kinesis" == record.event_source
+        and EventSource.kinesis == record.event_source
+    )
     assert "us-east-2" == record.aws_region
     assert "aws:kinesis:record" == record.event_name
-    assert "shardId-000000000006:49590338271490256608559692538361571095921575989136588898" == record.event_id
-    assert "arn:aws:kinesis:us-east-2:123456789012:stream/lambda-stream" == record.event_source_arn
+    assert (
+        "shardId-000000000006:49590338271490256608559692538361571095921575989136588898"
+        == record.event_id
+    )
+    assert (
+        "arn:aws:kinesis:us-east-2:123456789012:stream/lambda-stream"
+        == record.event_source_arn
+    )
 
     # kinesis fields
     kinesis_metadata = record.kinesis
     assert "1.0" == kinesis_metadata.schema_version
 
     assert "1" == kinesis_metadata.partition_key
-    assert "49590338271490256608559692538361571095921575989136588898" == kinesis_metadata.sequence_number
+    assert (
+        "49590338271490256608559692538361571095921575989136588898"
+        == kinesis_metadata.sequence_number
+    )
     assert "SGVsbG8sIHRoaXMgaXMgYSB0ZXN0Lg==" == kinesis_metadata.data
     assert "Hello, this is a test." == kinesis_metadata.decoded_data
-    assert datetime(2018, 12, 17, 22, 10, 50, 987000, tzinfo=timezone.utc) == kinesis_metadata.approximate_arrival_timestamp
+    assert (
+        datetime(2018, 12, 17, 22, 10, 50, 987000, tzinfo=timezone.utc)
+        == kinesis_metadata.approximate_arrival_timestamp
+    )
 
 
 def test_correctly_parse_valid_s3_event_record(s3_event_record):

@@ -32,7 +32,7 @@ class Kinesis(BaseModel):
             "partition_key": "partitionKey",
             "sequence_number": "sequenceNumber",
             "approximate_arrival_timestamp": "approximateArrivalTimestamp",
-            'decoded_data': 'data',
+            "decoded_data": "data",
         }
 
 
