@@ -38,8 +38,9 @@ setup(
     include_package_data=True,
     keywords="AWS Lambda Pydantic",
     name="aws-lambda-event-models",
+    package_dir={"": "src"},
     packages=find_packages(
-        include=["aws_lambda_event_models", "aws_lambda_event_models.*"]
+        where="src", include=["aws_lambda_event_models", "aws_lambda_event_models.*"]
     ),
     url="https://github.com/KeltonKarboviak/aws-lambda-event-models",
     version="0.0.1",
