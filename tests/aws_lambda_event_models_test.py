@@ -4,13 +4,34 @@ from datetime import datetime, timezone
 
 import pytest
 
-from aws_lambda_event_models import EventSource, S3EventRecord
+from aws_lambda_event_models import EventSource, KinesisEventRecord, S3EventRecord
 
 
 @pytest.fixture()
 def s3_lambda_event(s3_event_record):
     return {
         "Records": [s3_event_record],
+    }
+
+
+@pytest.fixture()
+def kinesis_event_record():
+    """Kinesis Event from https://docs.aws.amazon.com/lambda/latest/dg/with-kinesis.html"""
+    return {
+        "kinesis": {
+            "kinesisSchemaVersion": "1.0",
+            "partitionKey": "1",
+            "sequenceNumber": "49590338271490256608559692538361571095921575989136588898",
+            "data": "SGVsbG8sIHRoaXMgaXMgYSB0ZXN0Lg==",
+            "approximateArrivalTimestamp": 1545084650.987,
+        },
+        "eventSource": "aws:kinesis",
+        "eventVersion": "1.0",
+        "eventID": "shardId-000000000006:49590338271490256608559692538361571095921575989136588898",
+        "eventName": "aws:kinesis:record",
+        "invokeIdentityArn": "arn:aws:iam::123456789012:role/lambda-role",
+        "awsRegion": "us-east-2",
+        "eventSourceARN": "arn:aws:kinesis:us-east-2:123456789012:stream/lambda-stream",
     }
 
 
@@ -46,6 +67,29 @@ def s3_event_record():
             },
         },
     }
+
+
+def test_correctly_parse_valid_kinesis_event_record(kinesis_event_record):
+    """Test an Kinesis Event Record from AWS can be parsed into a Pydantic model."""
+    record = KinesisEventRecord(**kinesis_event_record)
+
+    # top-level fields
+    assert "1.0" == record.event_version
+    assert "aws:kinesis" == record.event_source and EventSource.kinesis == record.event_source
+    assert "us-east-2" == record.aws_region
+    assert "aws:kinesis:record" == record.event_name
+    assert "shardId-000000000006:49590338271490256608559692538361571095921575989136588898" == record.event_id
+    assert "arn:aws:kinesis:us-east-2:123456789012:stream/lambda-stream" == record.event_source_arn
+
+    # kinesis fields
+    kinesis_metadata = record.kinesis
+    assert "1.0" == kinesis_metadata.schema_version
+
+    assert "1" == kinesis_metadata.partition_key
+    assert "49590338271490256608559692538361571095921575989136588898" == kinesis_metadata.sequence_number
+    assert "SGVsbG8sIHRoaXMgaXMgYSB0ZXN0Lg==" == kinesis_metadata.data
+    assert "Hello, this is a test." == kinesis_metadata.decoded_data
+    assert datetime(2018, 12, 17, 22, 10, 50, 987000, tzinfo=timezone.utc) == kinesis_metadata.approximate_arrival_timestamp
 
 
 def test_correctly_parse_valid_s3_event_record(s3_event_record):
