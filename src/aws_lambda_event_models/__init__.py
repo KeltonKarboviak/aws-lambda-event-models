@@ -1,32 +1,16 @@
 """Top-level package for aws-lambda-event-models."""
 
-from base64 import b64decode
 from datetime import datetime
 from enum import Enum
 
 from pydantic import BaseModel
 
+from .types import Base64Str
+
 
 __author__ = """Kelton Karboviak"""
 __email__ = "kelton.karboviak@gmail.com"
 __version__ = "0.0.1"
-
-
-class Base64Str(str):
-    """base64 encoded data validation."""
-    @classmethod
-    def __get_validators__(cls):
-        yield cls.validate
-
-    @classmethod
-    def validate(cls, v):
-        if not isinstance(v, (bytes, str)):
-            raise TypeError(f'bytes or string required, received {type(v)}')
-        decoded = b64decode(v).decode('utf8')
-        return cls(decoded)
-
-    def __repr__(self):
-        return f'Base64({super().__repr__()})'
 
 
 class EventSource(str, Enum):
