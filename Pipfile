@@ -13,6 +13,7 @@ coverage = "*"
 flake8 = "*"
 pytest = "*"
 sphinx = "*"
+towncrier = "*"
 tox = "*"
 twine = "*"
 
